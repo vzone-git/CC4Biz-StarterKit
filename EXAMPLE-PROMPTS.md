@@ -160,6 +160,22 @@ Analyze: what we'd gain, what we'd give up, deal structure options.
 Recommend: go/no-go with reasoning.
 ```
 
+### Partner Scorecard (uses partner-scorecard skill)
+```
+Score and compare these potential partners: [Company A], [Company B], [Company C].
+Use the partner scorecard framework.
+We're looking for a [technology/channel/strategic] partner to help us [goal].
+Rank them and tell me which to pursue first.
+```
+
+### Executive Briefing / Meeting Prep (uses executive-briefing-prep skill)
+```
+I'm meeting with [Name], [Title] at [Company] on [date].
+The meeting is about [purpose].
+I want to [desired outcome — e.g., explore a partnership, close a deal, get an intro].
+Prepare a briefing for me.
+```
+
 ### Vendor Comparison
 ```
 Compare [Vendor A] vs [Vendor B] vs [Vendor C] for [our use case].

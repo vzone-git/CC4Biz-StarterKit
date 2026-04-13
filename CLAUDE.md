@@ -51,6 +51,14 @@ Fill in the sections below to help Claude understand your work. Delete the examp
 - Use tables and bullet points, minimize walls of text
 - No buzzwords like "synergy," "leverage," or "game-changer"
 
+## Confidential Information — DO NOT Include in External Documents
+
+(List metrics, terms, or details that should never appear in partner-facing or external documents. The confidentiality-guard hook will remind Claude to check this list before writing to partner-facing/ or external/ directories.)
+
+- Example: "Our actual gross margin is 72% — never share externally"
+- Example: "Valuation from last round: $28M — board-only"
+- Example: "We're in M&A discussions with CompanyX — not public"
+
 ## Output Preferences
 
 (Where Claude should save files and how to name them.)
@@ -58,5 +66,6 @@ Fill in the sections below to help Claude understand your work. Delete the examp
 - Save research reports to: output/research-reports/
 - Save presentations to: output/presentations/
 - Save investor materials to: output/investor-materials/
+- Save partner-facing materials to: partner-facing/ (triggers confidentiality check)
 - File naming: YYYY-MM-DD-description (e.g., 2026-04-13-partnership-roi-analysis.md)
 - When a deliverable is final, move it to: final/
