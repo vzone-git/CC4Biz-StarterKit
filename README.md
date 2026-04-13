@@ -2,7 +2,7 @@
 
 > Plugins, guardrails, and skills that turn Claude Code into a business machine — sharper research, professional deliverables, and built-in protection for your approved work.
 
-**No coding or terminal experience needed.** Setup takes 5 minutes.
+**No coding or terminal experience needed.** Setup takes 5 minutes. | **[Open Cheat Sheet](https://vzone-git.github.io/CC4Biz-StarterKit/CHEAT-SHEET.html)**
 
 Created by **[Vignesh Rama](https://www.linkedin.com/in/vramapro/)** | [MIT License](LICENSE)
 
@@ -80,7 +80,7 @@ cd %USERPROFILE%\Documents\my-workspace && claude
 
 Or open the Claude Code desktop app and point it at `my-workspace`.
 
-**Open `CHEAT-SHEET.html` in your browser** — it's a visual quick-reference with click-to-copy prompts for everything below. Keep it as a tab while you work.
+**[Open the Cheat Sheet](https://vzone-git.github.io/CC4Biz-StarterKit/CHEAT-SHEET.html)** — a visual quick-reference with click-to-copy prompts. Bookmark it or keep it as a tab while you work.
 
 Now just start talking to Claude:
 
