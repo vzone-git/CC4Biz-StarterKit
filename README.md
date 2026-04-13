@@ -2,7 +2,9 @@
 
 A curated set of plugins, guardrails, and skills for using Claude Code to build presentations, research markets, write business cases, analyze ROI, and create investor-facing materials.
 
-**No coding or terminal experience needed.**
+**No coding or terminal experience needed.** | [Cheat Sheet](#cheat-sheet) | [MIT License](LICENSE)
+
+Created by **Vignesh Rama** — [LinkedIn](https://linkedin.com/in/YOUR_LINKEDIN)
 
 ---
 
@@ -86,6 +88,7 @@ Please do the following:
    - Copy the .claude/ folder (with settings.json and hooks/) from the starter kit into my-workspace/
    - Copy the CLAUDE.md template from the starter kit into my-workspace/
    - Copy the EXAMPLE-PROMPTS.md from the starter kit into my-workspace/
+   - Copy the CHEAT-SHEET.html from the starter kit into my-workspace/
    - Create these subfolders: output/research-reports, output/presentations, output/investor-materials, partner-facing/, final/
    - Make the hook scripts executable (chmod +x on Mac/Linux, or skip on Windows)
 
@@ -129,7 +132,7 @@ Open Claude Code from your new workspace:
 - **Windows:** Open Command Prompt, type `cd %USERPROFILE%\Documents\my-workspace && claude`
 - **Or:** Open Claude Code's desktop app and point it at the `my-workspace` folder
 
-Then just start asking for things naturally. See `EXAMPLE-PROMPTS.md` for copy-paste prompts, or try:
+Then just start asking for things naturally. Open `CHEAT-SHEET.html` in your browser for a visual quick-reference of every prompt, or try:
 - "Research the competitive landscape for [your industry]"
 - "Create a presentation about [your topic]"
 - "Score these three potential partners: Company A, Company B, Company C"
@@ -243,6 +246,7 @@ Claude will ask about your preferred style and show preview options. The fronten
 my-workspace/
   CLAUDE.md                  <-- Your project context (fill this in!)
   EXAMPLE-PROMPTS.md         <-- Copy-paste prompt templates
+  CHEAT-SHEET.html           <-- Open in browser for visual quick-reference
   .claude/
     settings.json            <-- Plugin + hook config
     hooks/
@@ -432,3 +436,23 @@ If your document shows metrics across different time periods (e.g., "ARR was $3M
 
 **Something else isn't working:**
 Just tell Claude what's wrong. It can usually diagnose and fix configuration issues itself.
+
+---
+
+## Cheat Sheet
+
+The kit includes a visual quick-reference you can keep open while working. After setup, open it from your workspace:
+
+- **Mac:** `open CHEAT-SHEET.html` (or double-click the file in Finder)
+- **Windows:** `start CHEAT-SHEET.html` (or double-click the file in Explorer)
+- **Or just tell Claude:** "Open the cheat sheet for me"
+
+It shows every prompt in the kit organized by category — click any prompt to copy it to your clipboard. Keep it as a browser tab or pin it to your desktop for easy access.
+
+---
+
+## License
+
+MIT License. Use it, modify it, share it. See [LICENSE](LICENSE) for details.
+
+Created by **Vignesh Rama** — [LinkedIn](https://linkedin.com/in/YOUR_LINKEDIN)

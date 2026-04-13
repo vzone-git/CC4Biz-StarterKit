@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code for Business — Cheat Sheet</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0f0f0f;
+    color: #e8e4df;
+    padding: 32px;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .page {
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 36px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid #2a2a2a;
+  }
+  .header h1 {
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: #e8c9a0;
+    background: linear-gradient(135deg, #c4956a, #e8c9a0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+  .header p {
+    font-size: 15px;
+    color: #999;
+    font-weight: 500;
+  }
+
+  /* Grid */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+  }
+
+  /* Cards */
+  .card {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .card-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .card-title {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+
+  /* Prompt blocks */
+  .prompt {
+    background: #111;
+    border: 1px solid #252525;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+    font-size: 15px;
+    line-height: 1.6;
+    position: relative;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .prompt:hover {
+    border-color: #444;
+  }
+  .prompt:last-child { margin-bottom: 0; }
+  .prompt-label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #999;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .copy-btn {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #666;
+    background: none;
+    border: 1px solid #333;
+    border-radius: 4px;
+    padding: 2px 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .copy-btn:hover {
+    color: #ccc;
+    border-color: #555;
+  }
+  .copy-btn.copied {
+    color: #6ecf6e;
+    border-color: #6ecf6e;
+  }
+  .prompt code {
+    color: #d4c4b0;
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    display: block;
+    white-space: pre-wrap;
+  }
+
+  /* Color accents */
+  .research .card-icon { background: #1a2f1a; color: #6ecf6e; }
+  .research .card-title { color: #6ecf6e; }
+
+  .presentations .card-icon { background: #1a1a2f; color: #8e9eff; }
+  .presentations .card-title { color: #8e9eff; }
+
+  .investor .card-icon { background: #2f1a2a; color: #d47bc4; }
+  .investor .card-title { color: #d47bc4; }
+
+  .writing .card-icon { background: #2f2a1a; color: #d4b44a; }
+  .writing .card-title { color: #d4b44a; }
+
+  .strategy .card-icon { background: #1a2a2f; color: #4ac4d4; }
+  .strategy .card-title { color: #4ac4d4; }
+
+  .partnerships .card-icon { background: #2f1a1a; color: #e07a5f; }
+  .partnerships .card-title { color: #e07a5f; }
+
+  /* Guardrails bar */
+  .guardrails {
+    grid-column: 1 / -1;
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .guardrails .card-title { color: #bbb; }
+  .guardrails .card-icon { background: #222; color: #bbb; }
+  .guard-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+  }
+  .guard-item {
+    background: #111;
+    border: 1px solid #252525;
+    border-radius: 8px;
+    padding: 14px;
+    text-align: center;
+  }
+  .guard-item .guard-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #ccc;
+    margin-bottom: 5px;
+  }
+  .guard-item .guard-desc {
+    font-size: 12px;
+    color: #999;
+    line-height: 1.5;
+  }
+
+  /* Tips bar */
+  .tips {
+    grid-column: 1 / -1;
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .tips .card-title { color: #bbb; }
+  .tips .card-icon { background: #222; color: #bbb; }
+  .tip-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  .tip-item {
+    background: #111;
+    border: 1px solid #252525;
+    border-radius: 8px;
+    padding: 14px;
+  }
+  .tip-item strong {
+    font-size: 13px;
+    color: #ccc;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .tip-item span {
+    font-size: 12px;
+    color: #999;
+    line-height: 1.5;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid #2a2a2a;
+    font-size: 12px;
+    color: #888;
+  }
+  .footer a { color: #c4956a; text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+  .footer .author {
+    margin-top: 6px;
+    font-size: 12px;
+    color: #777;
+  }
+
+  /* Responsive: tablet / half-width browser */
+  @media (max-width: 768px) {
+    body { padding: 20px; }
+    .grid { grid-template-columns: 1fr; }
+    .guard-grid { grid-template-columns: repeat(2, 1fr); }
+    .tip-row { grid-template-columns: repeat(2, 1fr); }
+    .header h1 { font-size: 24px; }
+  }
+
+  /* Responsive: phone */
+  @media (max-width: 480px) {
+    body { padding: 14px; }
+    .guard-grid { grid-template-columns: 1fr; }
+    .tip-row { grid-template-columns: 1fr; }
+    .header h1 { font-size: 20px; }
+    .card { padding: 18px; }
+  }
+
+  /* Print */
+  @media print {
+    @page { margin: 1cm; }
+    body { background: #fff; color: #111; padding: 16px; font-size: 12pt; }
+    .page { max-width: 100%; }
+    .grid { grid-template-columns: 1fr; gap: 12px; }
+    .card, .guardrails, .tips { background: #f8f8f8; border-color: #ddd; break-inside: avoid; page-break-inside: avoid; }
+    .prompt { background: #f0f0f0; border-color: #ddd; }
+    .prompt code { color: #333; }
+    .guard-item, .tip-item { background: #f0f0f0; border-color: #ddd; }
+    .guard-grid { grid-template-columns: repeat(3, 1fr); }
+    .tip-row { grid-template-columns: repeat(2, 1fr); }
+    .header h1 { background: none; -webkit-text-fill-color: #333; color: #333; }
+    .card-title { color: #333 !important; }
+    .copy-btn { display: none; }
+    .footer a::after { content: " (" attr(href) ")"; font-size: 10px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <h1>Claude Code for Business — Cheat Sheet</h1>
+    <p>Click any prompt to copy it. Paste into Claude Code and replace the [bracketed] parts with your details.</p>
+  </div>
+
+  <div class="grid">
+
+    <!-- Research -->
+    <div class="card research">
+      <div class="card-header">
+        <div class="card-icon">&#x1F50D;</div>
+        <div class="card-title">Research</div>
+      </div>
+      <div class="prompt" onclick="copyPrompt(this)">
+        <div class="prompt-label">Deep Research <button class="copy-btn">Copy</button></div>
+        <code>Research [topic]. Give me an executive summary, key findings with sources, implications for us, risks, and recommendations.</code>
+      </div>
+      <div class="prompt" onclick="copyPrompt(this)">
+        <div class="prompt-label">Competitive Analysis <button class="copy-btn">Copy</button></div>
+        <code>Compare [Company A] vs [Company B] vs [Company C]. Pricing, features, target market, funding, traction, differentiators.</code>
+      </div>
+      <div class="prompt" onclick="copyPrompt(this)">
+        <div class="prompt-label">Market Sizing <button class="copy-btn">Copy</button></div>
+        <code>Size the market for [product]. TAM/SAM/SOM with top-down and bottom-up approaches.</code>
+      </div>
+      <div class="prompt" onclick="copyPrompt(this)">
+        <div class="prompt-label">ROI Analysis <button class="copy-btn">Copy</button></div>
+        <code>Build an ROI analysis for [investment]. Costs: [X]. Benefits: [Y]. Show conservative, base, and optimistic scenarios.</code>
+      </div>
+    </div>
+
+    <!-- Presentations -->
+    <div class="card presentations">
+      <div class="card-header">
+        <div class="card-icon">&#x1F4CA;</div>
+        <div class="card-title">Presentations</div>
+      </div>
+      <div class="prompt" onclick="copyPrompt(this)">
+        <div class="prompt-label">Pitch Deck <button class="copy-btn">Copy</button></div>
+        <code>Create a pitch deck. We do [X], solving [problem]. Traction: [metrics]. Ask: [raise amount]. [paste notes]</code>
+      </div>
+      <div class="prompt" onclick="copyPrompt(this)">
+        <div class="prompt-label">Board Deck <button class="copy-btn">Copy</button></div>
+        <code>Build a quarterly business review. Metrics: [paste]. Wins: [list]. Challenges: [list]. Next quarter plan: [list]. Decisions needed: [list].</code>
+      </div>
+      <div class="prompt" onclick="copyPrompt(this)">
+        <div class="prompt-label">Partnership Proposal <button class="copy-btn">Copy</button></div>
+        <code>Create a presentation proposing a partnership with [partner]. Value for them: [X]. Value for us: [Y]. Key terms: [Z].</code>
+      </div>
+    </div>
+
+    <!-- Investor Materials -->
+    <div class="card investor">
+      <div class="card-header">
+        <div class="card-icon">&#x1F4B0;</div>
+        <div class="card-title">Investor Materials</div>
+      </div>
+      <div class="prompt" onclick="copyPrompt(this)">
+        <div class="prompt-label">Investor Memo <button class="copy-btn">Copy</button></div>
+        <code>Write an investor memo for our [Series A]. Company: [name]. Traction: [metrics]. Market: [who]. Raise: [amount, use of funds].</code>
+      </div>
+      <div class="prompt" onclick="copyPrompt(this)">
+        <div class="prompt-label">Cold Outreach <button class="copy-btn">Copy</button></div>
+        <code>Draft a cold email to [investor] at [fund]. Why they're relevant: [thesis/portfolio fit]. Our proof point: [best metric]. Ask: [meeting].</code>
+      </div>
+      <div class="prompt" onclick="copyPrompt(this)">
+        <div class="prompt-label">Financial Model <button class="copy-btn">Copy</button></div>
+        <code>Build a financial model. Revenue: [X]. Growth: [assumptions]. Costs: [drivers]. Show 18-month monthly + 3-year annual, bear/base/bull.</code>
+      </div>
+    </div>
+
+    <!-- Writing & Content -->
+    <div class="card writing">
+      <div class="card-header">
+        <div class="card-icon">&#x270D;</div>
+        <div class="card-title">Writing & Content</div>
+      </div>
+      <div class="prompt" onclick="copyPrompt(this)">
+        <div class="prompt-label">Blog Post <button class="copy-btn">Copy</button></div>
+        <code>Write a blog post about [topic]. Audience: [who]. Goal: [action]. Tone: [style]. Length: [short/medium/long].</code>
+      </div>
+      <div class="prompt" onclick="copyPrompt(this)">
+        <div class="prompt-label">LinkedIn Post <button class="copy-btn">Copy</button></div>
+        <code>Write a LinkedIn post announcing [news]. Key message: [takeaway]. Include a call to action: [what to do].</code>
+      </div>
+      <div class="prompt" onclick="copyPrompt(this)">
+        <div class="prompt-label">Newsletter <button class="copy-btn">Copy</button></div>
+        <code>Write a newsletter about [topic]. Sections: [2-4 sections]. Audience: [subscribers]. Past issues covered: [context].</code>
+      </div>
+    </div>
+
+    <!-- Strategy & Business Cases -->
+    <div class="card strategy">
+      <div class="card-header">
+        <div class="card-icon">&#x1F9E0;</div>
+        <div class="card-title">Strategy & Business Cases</div>
+      </div>
+      <div class="prompt" onclick="copyPrompt(this)">
+        <div class="prompt-label">Business Case <button class="copy-btn">Copy</button></div>
+        <code>Write a business case for [initiative]. Problem: [X]. Solution: [Y]. Expected outcomes: [Z]. Costs: [W]. Risks: [R].</code>
+      </div>
+      <div class="prompt" onclick="copyPrompt(this)">
+        <div class="prompt-label">Vendor Comparison <button class="copy-btn">Copy</button></div>
+        <code>Compare [Vendor A] vs [B] vs [C] for [our use case]. Criteria: [what matters]. Deliver as a scored matrix with recommendation.</code>
+      </div>
+    </div>
+
+    <!-- Partnerships -->
+    <div class="card partnerships">
+      <div class="card-header">
+        <div class="card-icon">&#x1F91D;</div>
+        <div class="card-title">Partnerships</div>
+      </div>
+      <div class="prompt" onclick="copyPrompt(this)">
+        <div class="prompt-label">Partner Scorecard <button class="copy-btn">Copy</button></div>
+        <code>Score and compare these partners: [A], [B], [C]. We need a [type] partner to help us [goal]. Rank them.</code>
+      </div>
+      <div class="prompt" onclick="copyPrompt(this)">
+        <div class="prompt-label">Meeting Prep <button class="copy-btn">Copy</button></div>
+        <code>I'm meeting with [Name], [Title] at [Company] on [date]. It's about [purpose]. I want to [outcome]. Prep me.</code>
+      </div>
+      <div class="prompt" onclick="copyPrompt(this)">
+        <div class="prompt-label">Partnership Evaluation <button class="copy-btn">Copy</button></div>
+        <code>Evaluate whether we should partner with [company]. Research them. Analyze: what we gain, what we give up. Go/no-go.</code>
+      </div>
+    </div>
+
+    <!-- Guardrails -->
+    <div class="guardrails">
+      <div class="card-header">
+        <div class="card-icon">&#x1F6E1;</div>
+        <div class="card-title">Guardrails — Working Automatically in the Background</div>
+      </div>
+      <div class="guard-grid">
+        <div class="guard-item">
+          <div class="guard-name">Final Folder Lock</div>
+          <div class="guard-desc">Files in final/ can't be accidentally changed</div>
+        </div>
+        <div class="guard-item">
+          <div class="guard-name">Revision Guard</div>
+          <div class="guard-desc">Prevents full rewrites when you asked for small edits</div>
+        </div>
+        <div class="guard-item">
+          <div class="guard-name">Main Branch</div>
+          <div class="guard-desc">Blocks direct commits to main (if using git)</div>
+        </div>
+        <div class="guard-item">
+          <div class="guard-name">Confidentiality</div>
+          <div class="guard-desc">Checks external docs for internal data leaks</div>
+        </div>
+        <div class="guard-item">
+          <div class="guard-name">Number Check</div>
+          <div class="guard-desc">Catches conflicting metrics in documents</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tips -->
+    <div class="tips">
+      <div class="card-header">
+        <div class="card-icon">&#x26A1;</div>
+        <div class="card-title">Quick Tips</div>
+      </div>
+      <div class="tip-row">
+        <div class="tip-item">
+          <strong>Fill in CLAUDE.md</strong>
+          <span>Add your company, audience, and confidential terms. Less repeating yourself.</span>
+        </div>
+        <div class="tip-item">
+          <strong>Paste raw material</strong>
+          <span>Notes, outlines, data, URLs. Claude works best with something to work with.</span>
+        </div>
+        <div class="tip-item">
+          <strong>Revise, don't rewrite</strong>
+          <span>"Fix the intro" beats "redo the whole thing." Ask for surgical edits.</span>
+        </div>
+        <div class="tip-item">
+          <strong>Use final/ folder</strong>
+          <span>Move approved work to final/. It's protected from accidental changes.</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    Claude Code Starter Kit for Business & Research &mdash; <a href="https://github.com/vzone-git/CC4Biz-StarterKit">github.com/vzone-git/CC4Biz-StarterKit</a>
+    <div class="author">Created by Vignesh Rama &mdash; <a href="https://linkedin.com/in/YOUR_LINKEDIN">LinkedIn</a> &mdash; MIT License</div>
+  </div>
+
+</div>
+
+<script>
+function copyPrompt(el) {
+  const code = el.querySelector('code');
+  const btn = el.querySelector('.copy-btn');
+  if (!code || !btn) return;
+
+  navigator.clipboard.writeText(code.textContent.trim()).then(function() {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = 'Copy';
+      btn.classList.remove('copied');
+    }, 1500);
+  });
+}
+</script>
+</body>
+</html>
