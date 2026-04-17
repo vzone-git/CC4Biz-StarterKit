@@ -2,9 +2,23 @@
 
 > Plugins, guardrails, and skills that turn Claude Code into a business machine — sharper research, professional deliverables, and built-in protection for your approved work.
 
-**No coding or terminal experience needed.** Setup takes 5 minutes. | **[Open Cheat Sheet](https://vzone-git.github.io/CC4Biz-StarterKit/CHEAT-SHEET.html)**
+**No coding experience needed.** Setup takes 5–10 minutes. | **[Open Cheat Sheet](https://vzone-git.github.io/CC4Biz-StarterKit/CHEAT-SHEET.html)**
 
 Created by **[Vignesh Rama](https://www.linkedin.com/in/vramapro/)** | [MIT License](LICENSE)
+
+---
+
+## Before You Start — Prerequisites
+
+You need three things installed before running setup:
+
+| Requirement | Check | Install |
+|-------------|-------|---------|
+| **Claude Code** | Type `claude --version` in Terminal | [Install guide](https://docs.anthropic.com/en/docs/claude-code/overview) |
+| **Node.js** | Type `node --version` in Terminal | [nodejs.org](https://nodejs.org/en/download/) |
+| **git** | Type `git --version` in Terminal | Comes with Xcode tools on Mac; [git-scm.com](https://git-scm.com/download/win) on Windows |
+
+> **Mac tip:** If `git --version` gives you an error about the Xcode license, see [Troubleshooting](#troubleshooting) below.
 
 ---
 
@@ -14,8 +28,6 @@ Created by **[Vignesh Rama](https://www.linkedin.com/in/vramapro/)** | [MIT Lice
 
 Click the green **"Code"** button at the top of this page, then **"Download ZIP."** Unzip it anywhere (Downloads folder is fine).
 
-> Don't have Claude Code yet? Install it first: https://docs.anthropic.com/en/docs/claude-code/overview
-
 ### Step 2 — Paste One Prompt
 
 Open Claude Code and paste this entire block. Replace `STARTER_KIT_PATH` with where you unzipped the kit.
@@ -23,7 +35,7 @@ Open Claude Code and paste this entire block. Replace `STARTER_KIT_PATH` with wh
 **Mac path example:** `~/Downloads/CC4Biz-StarterKit-main`
 **Windows path example:** `C:\Users\YourName\Downloads\CC4Biz-StarterKit-main`
 
-> **Not sure of the path?** Just tell Claude: *"I downloaded a starter kit zip and unzipped it in my Downloads folder. Can you find it?"*
+> **Not sure of the path?** Tell Claude: *"I downloaded a starter kit zip and unzipped it in my Downloads folder. Can you find it?"*
 
 ```
 I just downloaded a Claude Code starter kit to set up my workspace for business research and presentations. The unzipped folder is at: STARTER_KIT_PATH
@@ -32,46 +44,73 @@ Please do the following:
 
 1. READ the README.md in that folder so you understand what this kit contains.
 
-2. INSTALL PLUGINS — run these commands:
-   /install-plugin obra/superpowers
-   /install-plugin affaan-m/everything-claude-code
-   /install-plugin claude-plugins-official/frontend-design
-   /install-plugin alirezarezvani/claude-skills
-   /install-plugin obra/cc-plugin-decision-log
-   /install-plugin obra/the-elements-of-style
+2. CHECK PREREQUISITES:
+   - Run: node --version
+     If node is not found: on Mac run `brew install node`; on Windows go to https://nodejs.org/en/download/
+   - Run: git --version
+     If git fails on Mac with an "Xcode license" message: run `brew install git` and use /opt/homebrew/bin/git for any git commands in this session.
 
-3. SET UP MY PROJECT — Create a workspace folder for my work:
+3. INSTALL PLUGINS — run these commands one by one:
+
+   First, register the plugin marketplaces:
+   claude plugin marketplace add obra/superpowers
+   claude plugin marketplace add affaan-m/everything-claude-code
+
+   Then install the standard plugins:
+   claude plugin install superpowers@superpowers-dev -s user
+   claude plugin install everything-claude-code@everything-claude-code -s user
+   claude plugin install frontend-design@claude-plugins-official -s user
+
+   For these two plugins the repos need a small wrapper to install correctly — do this for each:
+
+   cc-plugin-decision-log:
+   - Clone https://github.com/obra/cc-plugin-decision-log.git to a temporary folder (e.g. /tmp/cc-plugin-decision-log)
+   - Write this exact content to <temp-folder>/.claude-plugin/marketplace.json:
+     {"name":"cc-plugin-decision-log","plugins":[{"name":"cc-plugin-decision-log","source":"./","version":"0.1.0","description":"Logs decisions and problem-solving approaches to survive context compaction"}]}
+   - Run: claude plugin marketplace add <temp-folder>
+   - Run: claude plugin install cc-plugin-decision-log@cc-plugin-decision-log -s user
+
+   the-elements-of-style:
+   - Clone https://github.com/obra/the-elements-of-style.git to a temporary folder (e.g. /tmp/the-elements-of-style)
+   - Write this exact content to <temp-folder>/.claude-plugin/marketplace.json:
+     {"name":"the-elements-of-style","plugins":[{"name":"the-elements-of-style","source":"./","version":"1.0.0","description":"Writing guidance based on The Elements of Style"}]}
+   - Run: claude plugin marketplace add <temp-folder>
+   - Run: claude plugin install the-elements-of-style@the-elements-of-style -s user
+
+4. SET UP MY WORKSPACE — Create a folder for my work:
    - Create a folder called "my-workspace" in my Documents folder
    - Copy the .claude/ folder (with settings.json and hooks/) from the starter kit into my-workspace/
-   - Copy the CLAUDE.md template from the starter kit into my-workspace/
-   - Copy the EXAMPLE-PROMPTS.md from the starter kit into my-workspace/
-   - Copy the CHEAT-SHEET.html from the starter kit into my-workspace/
+   - Copy CLAUDE.md, EXAMPLE-PROMPTS.md, and CHEAT-SHEET.html from the starter kit into my-workspace/
    - Create these subfolders: output/research-reports, output/presentations, output/investor-materials, partner-facing/, final/
-   - Make the hook scripts executable (chmod +x on Mac/Linux, or skip on Windows)
+   - Make the hook scripts executable: chmod +x on Mac/Linux (skip on Windows)
 
-4. SET UP USER-LEVEL CONFIG — these apply to all my projects:
-   - Check if I already have a settings file at ~/.claude/settings.json
-   - If I don't have one, copy user-level-config/user-settings.json to ~/.claude/settings.json
-   - If I do have one, merge the "extraKnownMarketplaces" entries into my existing file
+5. SET UP USER-LEVEL CONFIG — these settings apply across all your projects:
+   - Check if ~/.claude/settings.json already exists
+   - If it doesn't: copy STARTER_KIT_PATH/user-level-config/user-settings.json to ~/.claude/settings.json
+   - If it does: merge the "extraKnownMarketplaces" entries from user-settings.json into the existing file without removing any existing entries
    - Create ~/.claude/skills/cost-aware-router/ and copy the SKILL.md from user-level-config/skills/cost-aware-router/
    - Create ~/.claude/skills/partner-scorecard/ and copy the SKILL.md from user-level-config/skills/partner-scorecard/
    - Create ~/.claude/skills/executive-briefing-prep/ and copy the SKILL.md from user-level-config/skills/executive-briefing-prep/
 
-5. VERIFY everything works:
-   - Confirm the .claude/hooks/ scripts exist in my-workspace and are executable
-   - Confirm the plugins were installed
-   - Confirm all three skills exist under ~/.claude/skills/
+6. VERIFY everything installed correctly:
+   - Run: claude plugin list
+   - Confirm hooks exist and are executable in my-workspace/.claude/hooks/
+   - Confirm the three skills exist under ~/.claude/skills/
    - Tell me if anything failed and how to fix it
 
-6. Show me a summary of what was set up and what I can do next.
+7. Show me a summary of what was set up and what I can do next.
+
+8. IMPORTANT: Remind me that I need to restart Claude Code for the newly installed plugins to take effect.
 
 Handle macOS vs Windows differences automatically. If a step doesn't apply to my OS, skip it and tell me.
 ```
 
+> **After setup:** Restart Claude Code before testing plugins — they won't be active in the same session where they were installed.
+
 ### Step 3 — Open Your Workspace and Go
 
 ```
-# Mac
+# Mac / Linux
 cd ~/Documents/my-workspace && claude
 
 # Windows
@@ -98,17 +137,16 @@ Now just start talking to Claude:
 ---
 
 <details>
-<summary><strong>What's in the Kit?</strong> — 6 plugins, 5 guardrails, 3 skills (click to expand)</summary>
+<summary><strong>What's in the Kit?</strong> — 5 plugins, 5 guardrails, 3 skills (click to expand)</summary>
 
 ### Plugins — expand what Claude can do
 
 | Plugin | What It Adds |
 |--------|-------------|
 | **superpowers** | Claude brainstorms and asks questions before diving in — instead of giving you generic first-draft output |
-| **everything-claude-code** | 150+ skills: deep-research, market-research, frontend-slides, investor-materials, investor-outreach, article-writing, content-engine, product-lens |
+| **everything-claude-code** | 459 skills: deep-research, market-research, frontend-slides, investor-materials, investor-outreach, article-writing, content-engine, and more |
 | **frontend-design** | Professional, distinctive visuals — fights the generic, template-y AI look |
-| **claude-skills** | 34 C-level advisory skills (CEO/CFO/CRO advisors, board-deck-builder, M&A-playbook, competitive-intel, scenario-war-room) + finance and business-growth skills |
-| **decision-log** | Tracks decisions across conversations — options considered, rationale, outcome |
+| **decision-log** | Tracks decisions across conversations — options considered, rationale, outcome. Survives context compaction |
 | **elements-of-style** | Clear, direct writing — fights verbose corporate prose |
 
 ### Guardrails — protect your work automatically
@@ -117,7 +155,7 @@ Now just start talking to Claude:
 |-----------|-------------|
 | **Final folder lock** | Files in `final/` or `approved/` can't be accidentally changed |
 | **Revision guard** | Prevents Claude from rewriting your whole document when you asked for one small edit |
-| **Main branch guard** | Blocks direct commits to main branch (only applies if you use git) |
+| **Main branch guard** | Blocks direct commits to main branch (only relevant if you use git) |
 | **Confidentiality check** | Warns when writing to `partner-facing/` or `external/` directories — reminds Claude to check for internal data. You define what's confidential in CLAUDE.md |
 | **Number consistency** | Catches "$4.2M ARR" on slide 3 and "$4.1M ARR" on slide 7 — before your board does |
 
@@ -127,7 +165,7 @@ Now just start talking to Claude:
 |-------|-------------|
 | **cost-aware-router** | Uses cheaper AI models for simple tasks, saves the expensive model for complex judgment. Cuts cost without cutting quality |
 | **partner-scorecard** | Scores partners on 7 dimensions (strategic fit, market reach, financial strength, etc.) — 1-5 scale, ranked comparison matrix. Same criteria every time |
-| **executive-briefing-prep** | One-page pre-meeting brief: background, recent news, relationship history, talking points, recommended ask. Done in minutes, saves 30-45 min per meeting |
+| **executive-briefing-prep** | One-page pre-meeting brief: background, recent news, relationship history, talking points, recommended ask. Done in minutes |
 
 </details>
 
@@ -304,13 +342,30 @@ Follow the authentication instructions to connect my Notion account.
 </details>
 
 <details>
-<summary><strong>Troubleshooting</strong> (click to expand)</summary>
+<summary id="troubleshooting"><strong>Troubleshooting</strong> (click to expand)</summary>
+
+**Plugins don't seem active after setup:**
+You must restart Claude Code after installing plugins — they don't activate mid-session. Close and reopen Claude Code, then test again.
 
 **"Permission denied" when hooks run:**
 Ask Claude: *"Make the hook scripts in .claude/hooks/ executable."*
+Or run: `chmod +x my-workspace/.claude/hooks/*.sh`
 
-**Plugins don't seem active:**
-Run `/install-plugin` again for each one. Or ask Claude: *"Check if my plugins are installed and active."*
+**`git` error on Mac: "Xcode license agreements"**
+Your system git is blocked until the Xcode license is accepted. The easiest fix — install Homebrew's git, which doesn't require any license agreement:
+```
+brew install git
+```
+Then tell Claude: *"Use /opt/homebrew/bin/git for all git operations."*
+
+**`node` not found:**
+Node.js is required by the decision-log plugin. Install it:
+- Mac: `brew install node`
+- Windows: Download from https://nodejs.org/en/download/
+- Linux: `sudo apt install nodejs` or use your distro's package manager
+
+**`claude plugin install` fails with "Marketplace file not found":**
+Some plugin repos (like `cc-plugin-decision-log` and `the-elements-of-style`) don't have a built-in marketplace manifest. The setup prompt above handles this automatically. If you're installing manually, ask Claude: *"Help me install the cc-plugin-decision-log plugin — it needs a marketplace wrapper."*
 
 **Claude rewrites entire files when you asked for small changes:**
 Ask Claude: *"Check that .claude/hooks/revision-guardrail.sh exists and is executable."*
