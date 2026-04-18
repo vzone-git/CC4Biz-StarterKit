@@ -247,6 +247,16 @@ Reset user-level config: delete `~/.claude/settings.json` and `~/.claude/skills/
 
 ---
 
+### "Claude stopped mid-task and asked me to 'state facts' before continuing."
+
+That's the **fact-forcing gate** from the `everything-claude-code` plugin working as intended. Before making certain changes — creating new files, editing important files, running commands — it requires Claude to explicitly state what it's about to do and why.
+
+This is a guardrail that catches autopilot mistakes. When you see it, Claude will answer the gate's questions and then continue. You don't need to do anything — just wait a moment while Claude satisfies the check and retries.
+
+If it fires repeatedly on the same action, that's a sign Claude should slow down and think more carefully about what it's doing. That's the point.
+
+---
+
 ### "Something is broken and none of these answers help."
 
 Tell Claude exactly what you tried and what happened — it can diagnose and fix most configuration issues on its own.
