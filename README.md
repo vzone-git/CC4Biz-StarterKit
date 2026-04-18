@@ -2,7 +2,7 @@
 
 > Plugins, guardrails, and skills that turn Claude Code into a business machine — sharper research, professional deliverables, and built-in protection for your approved work.
 
-**No coding experience needed.** Setup takes 5–10 minutes. | **[Open Cheat Sheet](https://vzone-git.github.io/CC4Biz-StarterKit/CHEAT-SHEET.html)**
+**No coding experience needed.** Setup takes 5–10 minutes. | **[Open Cheat Sheet](https://vzone-git.github.io/CC4Biz-StarterKit/CHEAT-SHEET.html)** | **[FAQ](FAQ.md)**
 
 Created by **[Vignesh Rama](https://www.linkedin.com/in/vramapro/)** | [MIT License](LICENSE)
 
